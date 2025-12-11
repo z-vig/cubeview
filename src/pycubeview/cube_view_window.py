@@ -109,6 +109,9 @@ class CubeViewWindow(BaseWindow):
             del self.state.spectrum_cache[old_name]
             self.state.spectrum_cache[new_name] = (plot, err)
             self.polygon_cache[new_name] = self.polygon_cache.pop(old_name)
+            for spec in self.spectral_display.save_cache:
+                if spec.name == old_name:
+                    spec.name = new_name
 
         def intercept_roi(in_coords: np.ndarray, verts: np.ndarray):
             new_c: QtGui.QColor = self.qcmap.to_pyqtgraph()[  # type: ignore
@@ -263,8 +266,8 @@ class CubeViewWindow(BaseWindow):
         fp_str, fp_type = qtw.QFileDialog.getOpenFileName(
             caption="Select Image Data",
             filter=(
-                "Spectral Cube Files (*.spcub, *.geospcub;;"
-                "Rasterio-Compatible Files (*.bsq, *.img, *.tif)"
+                "Spectral Cube Files (*.spcub *.geospcub);;"
+                "Rasterio-Compatible Files (*.bsq *.img *.tif)"
             ),
             directory=str(self.state.base_data_dir),
         )
@@ -278,7 +281,7 @@ class CubeViewWindow(BaseWindow):
         cube_fp_str, fp_type = qtw.QFileDialog.getOpenFileName(
             caption="Select Cube Data",
             filter=(
-                "Spectral Cube Files (*.spcub *.geospcub;;"
+                "Spectral Cube Files (*.spcub *.geospcub);;"
                 "Rasterio-Compatible Files (*.bsq *.img *.tif)"
             ),
             directory=str(self.state.base_data_dir),
@@ -298,7 +301,7 @@ class CubeViewWindow(BaseWindow):
                 caption="Select Wavelength (or other context) Data",
                 filter=(
                     "Wavelength File (*.wvl);;ENVI Header File (*.hdr);;"
-                    "Text-Based Files (*.txt *.csv))"
+                    "Text-Based Files (*.txt *.csv)"
                 ),
                 directory=str(self.state.base_data_dir),
             )
