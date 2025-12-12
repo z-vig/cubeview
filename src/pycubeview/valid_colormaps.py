@@ -19,6 +19,7 @@ SEQUENTIAL_COLOR_MAPS: tuple[str, ...] = (
     "crameri:lipari",
     "crameri:tokyo",
     "seaborn:rocket",
+    "colorbrewer:BuGn",
 )
 
 SequentialColorMap: TypeAlias = Literal[
@@ -27,4 +28,5 @@ SequentialColorMap: TypeAlias = Literal[
     "crameri:lipari",
     "crameri:tokyo",
     "seaborn:rocket",
+    "colorbrewer:BuGn",
 ]
